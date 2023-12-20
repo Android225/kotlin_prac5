@@ -2,6 +2,10 @@ package com.example.kotlin_prac5.Data.DataSource.Product
 
 import androidx.lifecycle.LiveData
 
+/**
+ * Репозиторий для работы с данными о продуктах.
+ * Добавлена функция удаления продукта из базы данных.
+ */
 class ProductRepository(private val productDao: ProductDao) {
 
     val getAllData: LiveData<List<Product>> = productDao.getAll()
@@ -14,4 +18,7 @@ class ProductRepository(private val productDao: ProductDao) {
         productDao.insertAll(products)
     }
 
+    suspend fun deleteProduct(product: Product) {
+        productDao.delete(product)
+    }
 }

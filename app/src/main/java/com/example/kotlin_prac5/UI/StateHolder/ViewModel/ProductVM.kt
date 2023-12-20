@@ -10,26 +10,36 @@ import com.example.kotlin_prac5.Data.DataSource.Product.ProductRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel для управления данными продуктов.
+ * Добавлена функция удаления продукта.
+ */
 class ProductVM(application: Application) : AndroidViewModel(application) {
 
     private val repository: ProductRepository
-    val getAllData: LiveData<List<Product>>
+    val allProducts: LiveData<List<Product>>
 
     init {
         val productDao = ProductDatabase.getDatabase(application).productDao()
         repository = ProductRepository(productDao)
-        getAllData = repository.getAllData
+        allProducts = repository.getAllData
     }
 
-    fun addItem(product: Product) {
+    fun addProduct(product: Product) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addProduct(product)
         }
     }
 
-    suspend fun addAllItem(products: List<Product>) {
+    fun addAllProducts(products: List<Product>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addAllProduct(products)
+        }
+    }
+
+    fun deleteProduct(product: Product) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteProduct(product)
         }
     }
 }

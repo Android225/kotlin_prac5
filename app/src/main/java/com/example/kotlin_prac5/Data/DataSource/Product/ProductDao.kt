@@ -1,11 +1,12 @@
 package com.example.kotlin_prac5.Data.DataSource.Product
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
+/**
+ * DAO для работы с продуктами в базе данных.
+ * Добавлен метод для удаления продукта из базы данных.
+ */
 @Dao
 interface ProductDao {
 
@@ -17,4 +18,7 @@ interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(products: List<Product>)
+
+    @Delete
+    suspend fun delete(product: Product)
 }
